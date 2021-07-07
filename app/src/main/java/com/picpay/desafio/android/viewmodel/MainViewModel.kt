@@ -4,10 +4,13 @@ import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.picpay.desafio.android.remote.model.User
 import com.picpay.desafio.android.remote.repository.ApiListener
 import com.picpay.desafio.android.remote.repository.DefaultRepository
-import com.picpay.desafio.android.utls.Constants
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class MainViewModel(private val repository: DefaultRepository) : ViewModel() {
 
@@ -24,7 +27,24 @@ class MainViewModel(private val repository: DefaultRepository) : ViewModel() {
     val responseMessage: LiveData<String> = _reponseMessage
 
     fun getUsers() {
-        val listener = object : ApiListener<List<User>> {
+        viewModelScope.launch {
+            _progressBar.value = View.VISIBLE
+
+            try {
+                val users = withContext(Dispatchers.Default){
+                    repository.getUsers()
+                }
+                _reponseMessage.value = ""
+                _progressBar.value = View.GONE
+                _usersList.value = users            }
+            catch (e: Exception){
+                _reponseMessage.value = e.message
+                _progressBar.value = View.GONE
+                _recyclerView.value = View.GONE
+            }
+        }
+
+        /*val listener = object : ApiListener<List<User>> {
             override fun onSuccess(list: List<User>) {
                 _reponseMessage.value = ""
                 _progressBar.value = View.GONE
@@ -39,7 +59,7 @@ class MainViewModel(private val repository: DefaultRepository) : ViewModel() {
 
         }
 
-        repository.getUsers(listener)
+        repository.getUsers(listener)*/
     }
 
 }

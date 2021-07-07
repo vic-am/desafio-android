@@ -1,26 +1,15 @@
 package com.picpay.desafio.android.remote.repository
 
-import com.picpay.desafio.android.remote.service.PicPayService
 import com.picpay.desafio.android.remote.model.User
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import com.picpay.desafio.android.remote.service.PicPayService
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 class PicPayRepository(private val service: PicPayService): DefaultRepository {
 
-    override fun getUsers(listener: ApiListener<List<User>>) {
-        val call: Call<List<User>> = service.getUsers()
-        call.enqueue(object : Callback<List<User>> {
-            override fun onResponse(call: Call<List<User>>, response: Response<List<User>>) {
-                if (response.body() != null) {
-                    response.body()?.let { listener.onSuccess(it) }
-                }
-            }
+    override suspend fun getUsers() =
+        withContext(Dispatchers.IO) {
+            return@withContext service.getUsers()
+        }
 
-            override fun onFailure(call: Call<List<User>>, t: Throwable) {
-                t.message?.let { listener.onFailure(it) }
-            }
-
-        })
-    }
 }

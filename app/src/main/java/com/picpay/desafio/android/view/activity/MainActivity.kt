@@ -1,6 +1,7 @@
 package com.picpay.desafio.android.view.activity
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.ProgressBar
 import android.widget.Toast
@@ -77,6 +78,7 @@ class MainActivity : AppCompatActivity() {
 
         Toast.makeText(this@MainActivity, message, Toast.LENGTH_LONG)
             .show()
+        Log.i("connection error", message)
     }
 
 }

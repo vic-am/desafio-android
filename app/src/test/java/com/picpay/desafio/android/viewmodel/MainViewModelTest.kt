@@ -5,9 +5,7 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
 import com.nhaarman.mockitokotlin2.verify
 import com.picpay.desafio.android.remote.model.User
-import com.picpay.desafio.android.remote.repository.ApiListener
 import com.picpay.desafio.android.remote.repository.DefaultRepository
-import com.picpay.desafio.android.utls.Constants
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -35,64 +33,7 @@ class MainViewModelTest {
 
     private lateinit var viewModel: MainViewModel
 
-    @Test
-    fun whenViewModelGetUsers_getSuccess_theListWillBeUpdated() {
-        val mockResponseMessage = ""
-        val mockProgressBar = View.GONE
-        val mockUsersList = listOf(
-            User("testImage", "testName", 0, "testUsername"),
-            User("testImage", "testName", 0, "testUsername"),
-            User("testImage", "testName", 0, "testUsername")
-        )
-
-        val mockRepositorySuccess = MockRepositorySuccess(mockUsersList)
-
-        viewModel = MainViewModel(mockRepositorySuccess)
-
-        viewModel.responseMessage.observeForever(responseMessageObserver)
-        viewModel.progressBar.observeForever(progressBarObserver)
-        viewModel.userList.observeForever(usersListObserver)
-
-        viewModel.getUsers()
-
-        verify(responseMessageObserver).onChanged(mockResponseMessage)
-        verify(progressBarObserver).onChanged(mockProgressBar)
-        verify(usersListObserver).onChanged(mockUsersList)
-    }
-
-    @Test
-    fun whenViewModelGetUsers_getFailure_theResponseWillBeFailure() {
-        val mockResponseStatus = "Não foi possível carregar os dados"
-        val mockProgressBar = View.GONE
-        val mockRecyclerView = View.GONE
-
-        val mockRepositoryFailure = MockRepositoryFailure()
-
-        viewModel = MainViewModel(mockRepositoryFailure)
-
-        viewModel.responseMessage.observeForever(responseMessageObserver)
-        viewModel.progressBar.observeForever(progressBarObserver)
-        viewModel.recyclerView.observeForever(recyclerViewObserver)
-
-        viewModel.getUsers()
-
-        verify(responseMessageObserver).onChanged(mockResponseStatus)
-        verify(progressBarObserver).onChanged(mockProgressBar)
-        verify(recyclerViewObserver).onChanged(mockRecyclerView)
-    }
-}
-
-class MockRepositorySuccess(private val list: List<User>) : DefaultRepository {
-    override fun getUsers(listener: ApiListener<List<User>>) {
-        listener.onSuccess(list)
-    }
 
 }
 
-class MockRepositoryFailure() : DefaultRepository {
-    override fun getUsers(listener: ApiListener<List<User>>) {
-        listener.onFailure("Não foi possível carregar os dados")
-    }
-
-}
 
