@@ -30,14 +30,14 @@ class MainViewModelTest {
     private lateinit var usersListObserver: Observer<List<User>>
 
     @Mock
-    private lateinit var responseStatusObserver: Observer<Int>
+    private lateinit var responseMessageObserver: Observer<String>
 
 
     private lateinit var viewModel: MainViewModel
 
     @Test
     fun whenViewModelGetUsers_getSuccess_theListWillBeUpdated() {
-        val mockResponseStatus = Constants.success
+        val mockResponseMessage = ""
         val mockProgressBar = View.GONE
         val mockUsersList = listOf(
             User("testImage", "testName", 0, "testUsername"),
@@ -49,20 +49,20 @@ class MainViewModelTest {
 
         viewModel = MainViewModel(mockRepositorySuccess)
 
-        viewModel.responseStatus.observeForever(responseStatusObserver)
+        viewModel.responseMessage.observeForever(responseMessageObserver)
         viewModel.progressBar.observeForever(progressBarObserver)
         viewModel.userList.observeForever(usersListObserver)
 
         viewModel.getUsers()
 
-        verify(responseStatusObserver).onChanged(mockResponseStatus)
+        verify(responseMessageObserver).onChanged(mockResponseMessage)
         verify(progressBarObserver).onChanged(mockProgressBar)
         verify(usersListObserver).onChanged(mockUsersList)
     }
 
     @Test
     fun whenViewModelGetUsers_getFailure_theResponseWillBeFailure() {
-        val mockResponseStatus = Constants.failure
+        val mockResponseStatus = "Não foi possível carregar os dados"
         val mockProgressBar = View.GONE
         val mockRecyclerView = View.GONE
 
@@ -70,13 +70,13 @@ class MainViewModelTest {
 
         viewModel = MainViewModel(mockRepositoryFailure)
 
-        viewModel.responseStatus.observeForever(responseStatusObserver)
+        viewModel.responseMessage.observeForever(responseMessageObserver)
         viewModel.progressBar.observeForever(progressBarObserver)
         viewModel.recyclerView.observeForever(recyclerViewObserver)
 
         viewModel.getUsers()
 
-        verify(responseStatusObserver).onChanged(mockResponseStatus)
+        verify(responseMessageObserver).onChanged(mockResponseStatus)
         verify(progressBarObserver).onChanged(mockProgressBar)
         verify(recyclerViewObserver).onChanged(mockRecyclerView)
     }
@@ -91,7 +91,7 @@ class MockRepositorySuccess(private val list: List<User>) : DefaultRepository {
 
 class MockRepositoryFailure() : DefaultRepository {
     override fun getUsers(listener: ApiListener<List<User>>) {
-        listener.onFailure()
+        listener.onFailure("Não foi possível carregar os dados")
     }
 
 }

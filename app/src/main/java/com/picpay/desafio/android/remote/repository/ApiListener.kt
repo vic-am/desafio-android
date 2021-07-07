@@ -4,5 +4,5 @@ interface ApiListener<T> {
 
     fun onSuccess(list: T)
 
-    fun onFailure()
+    fun onFailure(message: String)
 }

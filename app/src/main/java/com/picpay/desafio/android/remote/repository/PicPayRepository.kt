@@ -18,7 +18,7 @@ class PicPayRepository(private val service: PicPayService): DefaultRepository {
             }
 
             override fun onFailure(call: Call<List<User>>, t: Throwable) {
-                listener.onFailure()
+                t.message?.let { listener.onFailure(it) }
             }
 
         })

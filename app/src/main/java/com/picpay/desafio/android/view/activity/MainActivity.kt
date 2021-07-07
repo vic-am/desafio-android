@@ -8,9 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.picpay.desafio.android.R
 import com.picpay.desafio.android.databinding.ActivityMainBinding
-import com.picpay.desafio.android.utls.Constants
 import com.picpay.desafio.android.view.adapter.UserListAdapter
 import com.picpay.desafio.android.viewmodel.MainViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -68,17 +66,16 @@ class MainActivity : AppCompatActivity() {
             recyclerView.visibility = it
         })
 
-        viewModel.responseStatus.observe(this, Observer {
-            when (it) {
-                Constants.failure -> notifyIfResponseFailure()
+        viewModel.responseMessage.observe(this, Observer {
+            if (it != ""){
+                notifyIfResponseFailure(it)
             }
         })
     }
 
-    private fun notifyIfResponseFailure() {
-        val message = getString(R.string.error)
+    private fun notifyIfResponseFailure(message: String) {
 
-        Toast.makeText(this@MainActivity, message, Toast.LENGTH_SHORT)
+        Toast.makeText(this@MainActivity, message, Toast.LENGTH_LONG)
             .show()
     }
 
