@@ -35,6 +35,7 @@ class MainViewModel(private val repository: DefaultRepository) : ViewModel() {
                     repository.getUsers()
                 }
                 _reponseMessage.value = ""
+                _recyclerView.value = View.VISIBLE
                 _progressBar.value = View.GONE
                 _usersList.value = users            }
             catch (e: Exception){
@@ -43,23 +44,6 @@ class MainViewModel(private val repository: DefaultRepository) : ViewModel() {
                 _recyclerView.value = View.GONE
             }
         }
-
-        /*val listener = object : ApiListener<List<User>> {
-            override fun onSuccess(list: List<User>) {
-                _reponseMessage.value = ""
-                _progressBar.value = View.GONE
-                _usersList.value = list
-            }
-
-            override fun onFailure(message: String) {
-                _reponseMessage.value = message
-                _progressBar.value = View.GONE
-                _recyclerView.value = View.GONE
-            }
-
-        }
-
-        repository.getUsers(listener)*/
     }
 
 }
