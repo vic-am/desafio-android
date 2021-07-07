@@ -1,4 +1,4 @@
-package com.picpay.desafio.android.remote.repository
+package com.picpay.desafio.android.view.adapter
 
 import androidx.recyclerview.widget.DiffUtil
 import com.picpay.desafio.android.remote.model.User

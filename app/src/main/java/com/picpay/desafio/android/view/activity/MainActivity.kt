@@ -1,4 +1,4 @@
-package com.picpay.desafio.android.view
+package com.picpay.desafio.android.view.activity
 
 import android.os.Bundle
 import android.view.View
@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.picpay.desafio.android.R
 import com.picpay.desafio.android.databinding.ActivityMainBinding
 import com.picpay.desafio.android.utls.Constants
+import com.picpay.desafio.android.view.adapter.UserListAdapter
 import com.picpay.desafio.android.viewmodel.MainViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
