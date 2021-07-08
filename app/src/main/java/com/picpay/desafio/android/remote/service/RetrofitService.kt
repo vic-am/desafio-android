@@ -35,7 +35,6 @@ class RetrofitService(context: Context) {
         }
         .build()
 
-
     private fun getInstance(): Retrofit {
         return Retrofit.Builder()
             .baseUrl(url)
@@ -45,4 +44,5 @@ class RetrofitService(context: Context) {
     }
 
     fun getPicPayService(): PicPayService = getInstance().create(PicPayService::class.java)
+
 }

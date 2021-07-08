@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.picpay.desafio.android.R
 import com.picpay.desafio.android.databinding.ActivityMainBinding
 import com.picpay.desafio.android.view.adapter.UserListAdapter
 import com.picpay.desafio.android.viewmodel.MainViewModel
@@ -76,9 +77,9 @@ class MainActivity : AppCompatActivity() {
 
     private fun notifyIfResponseFailure(message: String) {
 
-        Toast.makeText(this@MainActivity, message, Toast.LENGTH_LONG)
+        Toast.makeText(this@MainActivity, getString(R.string.error), Toast.LENGTH_LONG)
             .show()
-        Log.i("connection error", message)
+        Log.i("erro de conexão", message)
     }
 
 }

@@ -6,7 +6,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.picpay.desafio.android.remote.model.User
-import com.picpay.desafio.android.remote.repository.ApiListener
 import com.picpay.desafio.android.remote.repository.DefaultRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

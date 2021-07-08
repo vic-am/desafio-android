@@ -23,7 +23,6 @@ class RemoteUtls private constructor() {
                     actNw.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) -> true
                     actNw.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) -> true
                     else -> false
-
                 }
             } else {
                 connectionManager.run {
@@ -38,8 +37,8 @@ class RemoteUtls private constructor() {
                     }
                 }
             }
-
             return isAvailable
         }
     }
+
 }

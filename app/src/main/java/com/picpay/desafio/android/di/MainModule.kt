@@ -14,4 +14,5 @@ val mainModule = module {
     viewModel {
         MainViewModel(get() as PicPayRepository)
     }
+
 }
